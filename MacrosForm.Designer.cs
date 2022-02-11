@@ -1,7 +1,7 @@
 ﻿
-namespace WindowsFormsApp1
+namespace Eos_Macros
 {
-    partial class Form1
+    partial class MacrosForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -44,9 +44,7 @@ namespace WindowsFormsApp1
             this.textBox_coordinate_x = new System.Windows.Forms.TextBox();
             this.checkBox_fishing = new System.Windows.Forms.CheckBox();
             this.textBox_coordinate_y = new System.Windows.Forms.TextBox();
-            this.richTextBox_inventory = new System.Windows.Forms.RichTextBox();
             this.timer_fishing = new System.Windows.Forms.Timer(this.components);
-            this.textBox_inventory = new System.Windows.Forms.TextBox();
             this.label_smallFish = new System.Windows.Forms.Label();
             this.label_bigFish = new System.Windows.Forms.Label();
             this.label_magFish = new System.Windows.Forms.Label();
@@ -61,13 +59,20 @@ namespace WindowsFormsApp1
             this.numericUpDown_regenTime = new System.Windows.Forms.NumericUpDown();
             this.button_regen = new System.Windows.Forms.Button();
             this.timer_regen = new System.Windows.Forms.Timer(this.components);
-            this.inventoryBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.characterBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.listView_bag = new System.Windows.Forms.ListView();
+            this.imageList_item = new System.Windows.Forms.ImageList(this.components);
+            this.pictureBox_item = new System.Windows.Forms.PictureBox();
+            this.button_sellItem = new System.Windows.Forms.Button();
+            this.numericUpDown_itemsForSellCount = new System.Windows.Forms.NumericUpDown();
+            this.button_sellAllItems = new System.Windows.Forms.Button();
+            this.label_money = new System.Windows.Forms.Label();
+            this.button_bank = new System.Windows.Forms.Button();
+            this.textBox_moneyBank = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_regenTime)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.inventoryBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.characterBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_itemsForSellCount)).BeginInit();
             this.SuspendLayout();
             // 
             // textBox_hp
@@ -209,26 +214,10 @@ namespace WindowsFormsApp1
             this.textBox_coordinate_y.Size = new System.Drawing.Size(34, 20);
             this.textBox_coordinate_y.TabIndex = 5;
             // 
-            // richTextBox_inventory
-            // 
-            this.richTextBox_inventory.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.richTextBox_inventory.Location = new System.Drawing.Point(98, 139);
-            this.richTextBox_inventory.Name = "richTextBox_inventory";
-            this.richTextBox_inventory.Size = new System.Drawing.Size(147, 122);
-            this.richTextBox_inventory.TabIndex = 6;
-            this.richTextBox_inventory.Text = "";
-            // 
             // timer_fishing
             // 
             this.timer_fishing.Interval = 450;
             this.timer_fishing.Tick += new System.EventHandler(this.timer_fishing_Tick);
-            // 
-            // textBox_inventory
-            // 
-            this.textBox_inventory.Location = new System.Drawing.Point(98, 267);
-            this.textBox_inventory.Name = "textBox_inventory";
-            this.textBox_inventory.Size = new System.Drawing.Size(100, 20);
-            this.textBox_inventory.TabIndex = 7;
             // 
             // label_smallFish
             // 
@@ -332,7 +321,7 @@ namespace WindowsFormsApp1
             // 
             this.radioButton_eatAllWithoutMagic.AutoSize = true;
             this.radioButton_eatAllWithoutMagic.Checked = true;
-            this.radioButton_eatAllWithoutMagic.Location = new System.Drawing.Point(9, 117);
+            this.radioButton_eatAllWithoutMagic.Location = new System.Drawing.Point(13, 96);
             this.radioButton_eatAllWithoutMagic.Name = "radioButton_eatAllWithoutMagic";
             this.radioButton_eatAllWithoutMagic.Size = new System.Drawing.Size(93, 17);
             this.radioButton_eatAllWithoutMagic.TabIndex = 15;
@@ -343,7 +332,7 @@ namespace WindowsFormsApp1
             // radioButton_eatAllFish
             // 
             this.radioButton_eatAllFish.AutoSize = true;
-            this.radioButton_eatAllFish.Location = new System.Drawing.Point(9, 94);
+            this.radioButton_eatAllFish.Location = new System.Drawing.Point(13, 73);
             this.radioButton_eatAllFish.Name = "radioButton_eatAllFish";
             this.radioButton_eatAllFish.Size = new System.Drawing.Size(73, 17);
             this.radioButton_eatAllFish.TabIndex = 14;
@@ -382,25 +371,109 @@ namespace WindowsFormsApp1
             this.timer_regen.Interval = 1000;
             this.timer_regen.Tick += new System.EventHandler(this.timer_regen_Tick);
             // 
-            // inventoryBindingSource
+            // listView_bag
             // 
-            this.inventoryBindingSource.DataMember = "BagItems";
-            this.inventoryBindingSource.DataSource = typeof(WindowsFormsApp1.Inventory);
+            this.listView_bag.HideSelection = false;
+            this.listView_bag.LargeImageList = this.imageList_item;
+            this.listView_bag.Location = new System.Drawing.Point(10, 139);
+            this.listView_bag.Name = "listView_bag";
+            this.listView_bag.Size = new System.Drawing.Size(313, 262);
+            this.listView_bag.TabIndex = 18;
+            this.listView_bag.UseCompatibleStateImageBehavior = false;
+            this.listView_bag.View = System.Windows.Forms.View.Tile;
+            this.listView_bag.SelectedIndexChanged += new System.EventHandler(this.listView_bag_SelectedIndexChanged);
+            this.listView_bag.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listView_bag_MouseDown);
             // 
-            // characterBindingSource
+            // imageList_item
             // 
-            this.characterBindingSource.DataSource = typeof(WindowsFormsApp1.Character);
+            this.imageList_item.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList_item.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageList_item.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // pictureBox_item
+            // 
+            this.pictureBox_item.Location = new System.Drawing.Point(12, 412);
+            this.pictureBox_item.Name = "pictureBox_item";
+            this.pictureBox_item.Size = new System.Drawing.Size(91, 83);
+            this.pictureBox_item.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_item.TabIndex = 19;
+            this.pictureBox_item.TabStop = false;
+            // 
+            // button_sellItem
+            // 
+            this.button_sellItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_sellItem.Location = new System.Drawing.Point(152, 412);
+            this.button_sellItem.Name = "button_sellItem";
+            this.button_sellItem.Size = new System.Drawing.Size(43, 39);
+            this.button_sellItem.TabIndex = 20;
+            this.button_sellItem.Text = "Sell";
+            this.button_sellItem.UseVisualStyleBackColor = true;
+            this.button_sellItem.Click += new System.EventHandler(this.button_sellItem_Click);
+            // 
+            // numericUpDown_itemsForSellCount
+            // 
+            this.numericUpDown_itemsForSellCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.numericUpDown_itemsForSellCount.Location = new System.Drawing.Point(109, 419);
+            this.numericUpDown_itemsForSellCount.Name = "numericUpDown_itemsForSellCount";
+            this.numericUpDown_itemsForSellCount.Size = new System.Drawing.Size(40, 26);
+            this.numericUpDown_itemsForSellCount.TabIndex = 21;
+            // 
+            // button_sellAllItems
+            // 
+            this.button_sellAllItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_sellAllItems.Location = new System.Drawing.Point(109, 457);
+            this.button_sellAllItems.Name = "button_sellAllItems";
+            this.button_sellAllItems.Size = new System.Drawing.Size(86, 38);
+            this.button_sellAllItems.TabIndex = 22;
+            this.button_sellAllItems.Text = "Sell all";
+            this.button_sellAllItems.UseVisualStyleBackColor = true;
+            // 
+            // label_money
+            // 
+            this.label_money.AutoSize = true;
+            this.label_money.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_money.ForeColor = System.Drawing.Color.Goldenrod;
+            this.label_money.Location = new System.Drawing.Point(26, 548);
+            this.label_money.Name = "label_money";
+            this.label_money.Size = new System.Drawing.Size(56, 20);
+            this.label_money.TabIndex = 23;
+            this.label_money.Text = "Money";
+            // 
+            // button_bank
+            // 
+            this.button_bank.ForeColor = System.Drawing.Color.DarkRed;
+            this.button_bank.Location = new System.Drawing.Point(89, 580);
+            this.button_bank.Name = "button_bank";
+            this.button_bank.Size = new System.Drawing.Size(75, 23);
+            this.button_bank.TabIndex = 24;
+            this.button_bank.Text = "BANK";
+            this.button_bank.UseVisualStyleBackColor = true;
+            // 
+            // textBox_moneyBank
+            // 
+            this.textBox_moneyBank.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox_moneyBank.ForeColor = System.Drawing.Color.DarkKhaki;
+            this.textBox_moneyBank.Location = new System.Drawing.Point(88, 544);
+            this.textBox_moneyBank.Name = "textBox_moneyBank";
+            this.textBox_moneyBank.Size = new System.Drawing.Size(76, 26);
+            this.textBox_moneyBank.TabIndex = 25;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(335, 645);
+            this.Controls.Add(this.textBox_moneyBank);
+            this.Controls.Add(this.button_bank);
+            this.Controls.Add(this.label_money);
+            this.Controls.Add(this.button_sellAllItems);
+            this.Controls.Add(this.numericUpDown_itemsForSellCount);
+            this.Controls.Add(this.button_sellItem);
+            this.Controls.Add(this.pictureBox_item);
+            this.Controls.Add(this.listView_bag);
             this.Controls.Add(this.button_regen);
             this.Controls.Add(this.numericUpDown_regenTime);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.textBox_inventory);
-            this.Controls.Add(this.richTextBox_inventory);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.target_window);
             this.Name = "Form1";
@@ -412,8 +485,8 @@ namespace WindowsFormsApp1
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_regenTime)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.inventoryBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.characterBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_itemsForSellCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -435,9 +508,7 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.TextBox textBox_coordinate_x;
         private System.Windows.Forms.CheckBox checkBox_fishing;
         private System.Windows.Forms.TextBox textBox_coordinate_y;
-        private System.Windows.Forms.RichTextBox richTextBox_inventory;
         private System.Windows.Forms.Timer timer_fishing;
-        private System.Windows.Forms.TextBox textBox_inventory;
         private System.Windows.Forms.Label label_smallFish;
         private System.Windows.Forms.Label label_bigFish;
         private System.Windows.Forms.Label label_magFish;
@@ -452,8 +523,15 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Button button_regen;
         private System.Windows.Forms.Timer timer_regen;
         private System.Windows.Forms.Label label_netFound;
-        private System.Windows.Forms.BindingSource inventoryBindingSource;
-        private System.Windows.Forms.BindingSource characterBindingSource;
+        private System.Windows.Forms.ListView listView_bag;
+        private System.Windows.Forms.ImageList imageList_item;
+        private System.Windows.Forms.PictureBox pictureBox_item;
+        private System.Windows.Forms.Button button_sellItem;
+        private System.Windows.Forms.NumericUpDown numericUpDown_itemsForSellCount;
+        private System.Windows.Forms.Button button_sellAllItems;
+        private System.Windows.Forms.Label label_money;
+        private System.Windows.Forms.Button button_bank;
+        private System.Windows.Forms.TextBox textBox_moneyBank;
     }
 }
 

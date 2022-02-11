@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace WindowsFormsApp1
+namespace Eos_Macros
 {
     public class ClientWindow
     {
@@ -34,6 +34,8 @@ namespace WindowsFormsApp1
 
         public Memory Command { get; set; }
 
+        public bool CharacterIsFound { get; set; }
+
         public IntPtr clientWindow;
         public IntPtr clientProcess;
         public IntPtr handleWithAccess;
@@ -43,11 +45,6 @@ namespace WindowsFormsApp1
             FindWindow();
             Command = new Memory(this);
         }
-
-       /* private bool ClientProcess(IntPtr hwnd, IntPtr lParam)
-        {
-            return false;
-        }*/
 
         public void FindWindow()
         {         
@@ -60,15 +57,22 @@ namespace WindowsFormsApp1
                 if (pro.ProcessName == "MUDClient")
                 {
                     clientProcess = pro.MainWindowHandle;
+                    CharacterIsFound = true;
                     break;
                 }
             }
             clientWindow = FindWindow("TForm1", "SW");
 
+            if(clientWindow.ToInt32() == 0)
+            {
+                CharacterIsFound = false;
+                return;
+            }
+
             GetWindowThreadProcessId(clientWindow, out procId);
             handleWithAccess = OpenProcess(PROCESS_ALL_ACCESS, IntPtr.Zero, procId);
-
-           // EnumChildWindows(clientProcess, ClientProcess, IntPtr.Zero);
+            // EnumChildWindows(clientProcess, ClientProcess, IntPtr.Zero);
+            CharacterIsFound = true;
         }
     }
 }

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Threading;
 
-namespace WindowsFormsApp1
+namespace Eos_Macros
 {
     public class Memory
     {
-
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern int ReadProcessMemory(
             IntPtr hProcess,
@@ -34,7 +34,8 @@ namespace WindowsFormsApp1
             WM_RBUTTONDOWN = 0x0204,
             WM_RBUTTONUP = 0x0205,
             WM_LBUTTONDOWN = 513,
-            WM_LBUTTONUP = 514;
+            WM_LBUTTONUP = 514,
+            WM_LBDBLCLICK = 515;
 
         private IntPtr _handleWithAccess;
         private IntPtr _clientWindow;
@@ -68,6 +69,13 @@ namespace WindowsFormsApp1
         {
             SendMessage(_clientWindow, WM_RBUTTONDOWN, 0, new IntPtr(y * 0x10000 + x));
             SendMessage(_clientWindow, WM_RBUTTONUP, 0, new IntPtr(y * 0x10000 + x));
+        }
+        
+        public void DoubleClickLb(int x, int y)
+        {
+            SendMessage(_clientWindow, WM_LBUTTONDOWN, 0, new IntPtr(y * 0x10000 + x));
+            SendMessage(_clientWindow, WM_LBDBLCLICK, 0, new IntPtr(y * 0x10000 + x));
+            SendMessage(_clientWindow, WM_LBUTTONUP, 0, new IntPtr(y * 0x10000 + x));
         }
     }
 }
